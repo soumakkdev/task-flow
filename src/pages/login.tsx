@@ -1,16 +1,28 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/lib/AuthContext'
 import { useForm } from '@tanstack/react-form'
+import { useRouter } from 'next/router'
 
 export default function LoginPage() {
+	const { replace } = useRouter()
+	const { loginWithPassword } = useAuth()
 	const form = useForm({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 		onSubmit: async ({ value }) => {
-			console.log(value)
+			try {
+				const result = await loginWithPassword(value)
+				if (!result.token) {
+					// handle Invalid email or password
+				}
+				replace('/')
+			} catch (error) {
+				console.log(error)
+			}
 		},
 	})
 	return (
@@ -50,8 +62,9 @@ export default function LoginPage() {
 						<form.Field name="password">
 							{(field) => (
 								<>
-									<Label htmlFor={field.name}>Email address</Label>
+									<Label htmlFor={field.name}>Password</Label>
 									<Input
+										type="password"
 										name={field.name}
 										value={field.state.value}
 										onBlur={field.handleBlur}
