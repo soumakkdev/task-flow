@@ -1,11 +1,12 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/lib/AuthContext'
 import { useForm } from '@tanstack/react-form'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
-export default function LoginPage() {
+export default function Login() {
 	const { replace } = useRouter()
 	const { loginWithPassword } = useAuth()
 	const form = useForm({
@@ -16,9 +17,7 @@ export default function LoginPage() {
 		onSubmit: async ({ value }) => {
 			try {
 				const result = await loginWithPassword(value)
-				if (!result.token) {
-					// handle Invalid email or password
-				}
+				console.log(result)
 				replace('/')
 			} catch (error) {
 				console.log(error)

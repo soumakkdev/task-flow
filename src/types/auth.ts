@@ -6,5 +6,5 @@ export interface ILoginWithPasswordParams {
 }
 
 export interface IAuthContext {
-	loginWithPassword: (params: ILoginWithPasswordParams) => Promise<RecordAuthResponse<RecordModel>>
+	loginWithPassword: (params: ILoginWithPasswordParams) => void
 }
