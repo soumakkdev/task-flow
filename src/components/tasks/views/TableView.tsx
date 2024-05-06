@@ -1,8 +1,8 @@
 import React from 'react'
-import DataTable from '../widgets/DataTable'
+import DataTable from '../../widgets/DataTable'
 import { ColumnDef } from '@tanstack/react-table'
 
-export default function TasksTable() {
+export default function TableView() {
 	type Payment = {
 		id: string
 		amount: number

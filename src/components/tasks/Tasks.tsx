@@ -1,18 +1,24 @@
 'use client'
 import { getTasks } from '@/actions/tasksActions'
 import { useQuery } from '@tanstack/react-query'
-import TasksTable from './TasksTable'
+import TableView from './views/TableView'
 import { Button } from '../ui/button'
-import { Plus } from 'lucide-react'
+import { Calendar, Plus, SquareKanban, Table } from 'lucide-react'
+import { Input } from '../ui/input'
+import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
+import { useAtom } from 'jotai'
+import { TasksViews, currentViewAtom } from './Tasks.utils'
+import KanbanView from './views/KanbanView'
+import CalendarView from './views/CalendarView'
 
 export default function Tasks() {
+	const [currentView, setCurrentView] = useAtom(currentViewAtom)
 	const { data, isLoading } = useQuery({
 		queryKey: ['tasks'],
 		queryFn: getTasks,
 	})
 
 	if (isLoading) return 'Loading'
-	console.log(data)
 
 	return (
 		<div className="flex-1 p-4">
@@ -23,7 +29,34 @@ export default function Tasks() {
 					Add Task
 				</Button>
 			</header>
-			<TasksTable />
+
+			<div className="flex my-3 items-center justify-between">
+				<div className="flex items-center gap-3">
+					<Input placeholder="Search tasks" />
+					<Button variant="secondary">Status</Button>
+					<Button variant="secondary">Priority</Button>
+				</div>
+
+				<ToggleGroup type="single" value={currentView} onValueChange={(value: TasksViews) => setCurrentView(value)}>
+					<ToggleGroupItem value={TasksViews.Table} className="rounded-xl">
+						<Table className="h-5 w-5" />
+					</ToggleGroupItem>
+					<ToggleGroupItem value={TasksViews.Kanban} className="rounded-xl">
+						<SquareKanban className="h-5 w-5" />
+					</ToggleGroupItem>
+					<ToggleGroupItem value={TasksViews.Calendar} className="rounded-xl">
+						<Calendar className="h-5 w-5" />
+					</ToggleGroupItem>
+				</ToggleGroup>
+			</div>
+
+			{currentView === TasksViews.Table ? (
+				<TableView />
+			) : currentView === TasksViews.Kanban ? (
+				<KanbanView />
+			) : currentView === TasksViews.Calendar ? (
+				<CalendarView />
+			) : null}
 		</div>
 	)
 }
