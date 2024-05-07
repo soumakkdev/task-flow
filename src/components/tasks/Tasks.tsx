@@ -1,5 +1,5 @@
 'use client'
-import { getTasks } from '@/actions/tasksActions'
+import { getStatusList, getTasks } from '@/actions/tasksActions'
 import { useQuery } from '@tanstack/react-query'
 import TableView from './views/TableView'
 import { Button } from '../ui/button'
@@ -13,15 +13,20 @@ import CalendarView from './views/CalendarView'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
-	const { data, isLoading } = useQuery({
+	const { data: tasks, isLoading } = useQuery({
 		queryKey: ['tasks'],
 		queryFn: getTasks,
 	})
+	const { data: statusList, isLoading: isStatusLoading } = useQuery({
+		queryKey: ['status'],
+		queryFn: getStatusList,
+	})
 
-	if (isLoading) return 'Loading'
+	if (isLoading) return 'Loading...'
+	// console.log(tasks)
 
 	return (
-		<div className="flex-1 p-4">
+		<div className="flex-1 p-4 flex flex-col">
 			<header className="flex items-center justify-between">
 				<h1 className="text-2xl font-bold">Tasks</h1>
 				<Button>
@@ -51,9 +56,9 @@ export default function Tasks() {
 			</div>
 
 			{currentView === TasksViews.Table ? (
-				<TableView />
+				<TableView tasks={tasks} />
 			) : currentView === TasksViews.Kanban ? (
-				<KanbanView />
+				<KanbanView tasks={tasks} statusList={statusList} />
 			) : currentView === TasksViews.Calendar ? (
 				<CalendarView />
 			) : null}

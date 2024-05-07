@@ -1,44 +1,47 @@
-import React from 'react'
-import DataTable from '../../widgets/DataTable'
+import { Badge } from '@/components/ui/badge'
+import { TasksResponse } from '@/lib/pb-types'
+import { formatDate } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
+import DataTable from '../../widgets/DataTable'
 
-export default function TableView() {
-	type Payment = {
-		id: string
-		amount: number
-		status: 'pending' | 'processing' | 'success' | 'failed'
-		email: string
-	}
-
-	const payments: Payment[] = [
+export default function TableView({ tasks }: { tasks: TasksResponse[] }) {
+	const columns: ColumnDef<TasksResponse>[] = [
 		{
-			id: '728ed52f',
-			amount: 100,
-			status: 'pending',
-			email: 'm@example.com',
+			accessorKey: 'title',
+			header: 'Title',
 		},
 		{
-			id: '489e1d42',
-			amount: 125,
-			status: 'processing',
-			email: 'example@gmail.com',
+			accessorKey: 'priority',
+			header: 'Priority',
 		},
-	]
-
-	const columns: ColumnDef<Payment>[] = [
 		{
-			accessorKey: 'status',
+			accessorKey: 'expand.status.name',
 			header: 'Status',
+			cell: ({ getValue }) => {
+				const status = getValue() as string
+				if (!status) return null
+				return <Badge>{status}</Badge>
+			},
 		},
 		{
-			accessorKey: 'email',
-			header: 'Email',
+			accessorKey: 'deadline',
+			header: 'Deadline',
+			cell: ({ getValue }) => {
+				const deadline = getValue() as string
+				if (!deadline) return null
+				return <p>{formatDate(deadline)}</p>
+			},
 		},
 		{
-			accessorKey: 'amount',
-			header: 'Amount',
+			accessorKey: 'updated',
+			header: 'Last updated',
+			cell: ({ getValue }) => {
+				const updated = getValue() as string
+				if (!updated) return null
+				return <p>{formatDate(updated)}</p>
+			},
 		},
 	]
 
-	return <DataTable columns={columns} data={payments} />
+	return <DataTable columns={columns} data={tasks} />
 }
