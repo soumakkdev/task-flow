@@ -9,7 +9,7 @@ import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { useAtom } from 'jotai'
 import { TasksViews, currentViewAtom } from './Tasks.utils'
 import KanbanView from './views/KanbanView'
-import CalendarView from './views/CalendarView'
+import CalendarView from './views/calendar/CalendarView'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
