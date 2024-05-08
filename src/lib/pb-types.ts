@@ -1,14 +1,14 @@
 /**
-* This file was @generated using pocketbase-typegen
-*/
+ * This file was @generated using pocketbase-typegen
+ */
 
 import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
 export enum Collections {
-	Status = "status",
-	Tasks = "tasks",
-	Users = "users",
+	Status = 'status',
+	Tasks = 'tasks',
+	Users = 'users',
 }
 
 // Alias types for improved usability
@@ -36,9 +36,9 @@ export type AuthSystemFields<T = never> = {
 // Record types for each collection
 
 export enum StatusTypeOptions {
-	"Active" = "Active",
-	"Done" = "Done",
-	"Closed" = "Closed",
+	'Active' = 'Active',
+	'Done' = 'Done',
+	'Closed' = 'Closed',
 }
 export type StatusRecord = {
 	color?: string
@@ -47,10 +47,10 @@ export type StatusRecord = {
 }
 
 export enum TasksPriorityOptions {
-	"Urgent" = "Urgent",
-	"High" = "High",
-	"Normal" = "Normal",
-	"Low" = "Low",
+	'Urgent' = 'Urgent',
+	'High' = 'High',
+	'Normal' = 'Normal',
+	'Low' = 'Low',
 }
 export type TasksRecord = {
 	deadline?: IsoDateString
@@ -91,4 +91,12 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'status'): RecordService<StatusResponse>
 	collection(idOrName: 'tasks'): RecordService<TasksResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
+}
+
+export interface ListResponse<T> {
+	items: T
+	page: number
+	perPage: number
+	totalItems: number
+	totalPages: number
 }

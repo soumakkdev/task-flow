@@ -13,7 +13,7 @@ import CalendarView from './views/calendar/CalendarView'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
-	const { data: tasks, isLoading } = useQuery({
+	const { data: tasksList, isLoading } = useQuery({
 		queryKey: ['tasks'],
 		queryFn: getTasks,
 	})
@@ -22,8 +22,7 @@ export default function Tasks() {
 		queryFn: getStatusList,
 	})
 
-	if (isLoading) return 'Loading...'
-	// console.log(tasks)
+	if (isLoading || isStatusLoading) return 'Loading...'
 
 	return (
 		<div className="flex-1 p-4 flex flex-col">
@@ -56,9 +55,9 @@ export default function Tasks() {
 			</div>
 
 			{currentView === TasksViews.Table ? (
-				<TableView tasks={tasks} />
+				<TableView tasks={tasksList?.items} />
 			) : currentView === TasksViews.Kanban ? (
-				<KanbanView tasks={tasks} statusList={statusList} />
+				<KanbanView tasks={tasksList?.items} statusList={statusList?.items} />
 			) : currentView === TasksViews.Calendar ? (
 				<CalendarView />
 			) : null}

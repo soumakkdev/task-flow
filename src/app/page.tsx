@@ -1,17 +1,11 @@
-import { getStatusList, getTasks } from '@/actions/tasksActions'
 import SideNav from '@/components/layout/SideNav'
 import Tasks from '@/components/tasks/Tasks'
-import PrefetchQuery from '@/lib/query/PrefetchQuery'
 
 export default async function RootPage() {
 	return (
-		<PrefetchQuery queryFn={getTasks} queryKey={['tasks']}>
-			<PrefetchQuery queryFn={getStatusList} queryKey={['status']}>
-				<div className="flex h-full">
-					<SideNav />
-					<Tasks />
-				</div>
-			</PrefetchQuery>
-		</PrefetchQuery>
+		<div className="flex h-full">
+			<SideNav />
+			<Tasks />
+		</div>
 	)
 }
