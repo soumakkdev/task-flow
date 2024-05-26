@@ -24,7 +24,9 @@
 		"jotai": "^2.8.0",
 		"lucide-react": "^0.367.0",
 		"next": "14.1.4",
-		"pocketbase": "^0.21.1",
+		"@supabase/ssr": "latest",
+		"@supabase/supabase-js": "latest",
+		"geist": "^1.2.1",
 		"react": "^18",
 		"react-dom": "^18",
 		"tailwind-merge": "^2.2.2",
@@ -39,6 +41,7 @@
 		"eslint-config-next": "14.1.4",
 		"postcss": "^8",
 		"tailwindcss": "^3.3.0",
-		"typescript": "^5"
+		"typescript": "^5",
+		"encoding": "^0.1.13"
 	}
 }
