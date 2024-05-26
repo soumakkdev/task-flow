@@ -1,11 +1,10 @@
 import { Badge } from '@/components/ui/badge'
-import { TasksResponse } from '@/lib/pb-types'
 import { formatDate } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import DataTable from '../../widgets/DataTable'
 
-export default function TableView({ tasks }: { tasks: TasksResponse[] }) {
-	const columns: ColumnDef<TasksResponse>[] = [
+export default function TableView({ tasks }: { tasks: any[] }) {
+	const columns: ColumnDef<any>[] = [
 		{
 			accessorKey: 'title',
 			header: 'Title',

@@ -1,8 +1,7 @@
 import { Badge } from '@/components/ui/badge'
-import { StatusResponse, TasksResponse } from '@/lib/pb-types'
 import React from 'react'
 
-export default function KanbanView({ tasks, statusList }: { tasks: TasksResponse[]; statusList: StatusResponse[] }) {
+export default function KanbanView({ tasks, statusList }: { tasks: any[]; statusList: any[] }) {
 	return (
 		<div className="flex gap-4 flex-1">
 			{statusList?.map((status) => {
