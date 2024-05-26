@@ -16,7 +16,7 @@ export default function DataTable<TData, TValue>({ data, columns }: DataTablePro
 	})
 	return (
 		<div>
-			<Table className="border">
+			<Table className="border-y">
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>

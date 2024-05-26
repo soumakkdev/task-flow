@@ -14,7 +14,7 @@ export default function Header({ currentMonth, onChangeCurrentMonth }: { current
 	}
 
 	return (
-		<header className="flex items-center justify-between px-4 py-2">
+		<header className="flex items-center justify-between px-4 py-1">
 			<span className="text-lg font-semibold">{currentMonth.format(dateFormat)}</span>
 
 			<div className="flex items-center gap-2">
@@ -22,11 +22,11 @@ export default function Header({ currentMonth, onChangeCurrentMonth }: { current
 					Today
 				</Button>
 
-				<Button onClick={prevMonth} variant="outline" className="h-9 w-9 rounded-full p-0">
-					<ChevronLeft className="h-5 w-5 text-muted-foreground" />
+				<Button onClick={prevMonth} variant="outline" className="h-8 w-8 rounded-full p-0">
+					<ChevronLeft className="h-4 w-4 text-muted-foreground" />
 				</Button>
-				<Button onClick={nextMonth} variant="outline" className="h-9 w-9 rounded-full p-0">
-					<ChevronRight className="h-5 w-5 text-muted-foreground" />
+				<Button onClick={nextMonth} variant="outline" className="h-8 w-8 rounded-full p-0">
+					<ChevronRight className="h-4 w-4 text-muted-foreground" />
 				</Button>
 			</div>
 		</header>

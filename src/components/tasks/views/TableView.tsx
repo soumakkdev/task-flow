@@ -1,9 +1,9 @@
-import { Badge } from '@/components/ui/badge'
 import { formatDate } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import DataTable from '../../widgets/DataTable'
+import { IStatus, ITask } from '@/types/tasks'
 
-export default function TableView({ tasks }: { tasks: any[] }) {
+export default function TableView({ tasks }: { tasks: ITask[] }) {
 	const columns: ColumnDef<any>[] = [
 		{
 			accessorKey: 'title',
@@ -14,25 +14,25 @@ export default function TableView({ tasks }: { tasks: any[] }) {
 			header: 'Priority',
 		},
 		{
-			accessorKey: 'expand.status.name',
+			accessorKey: 'status',
 			header: 'Status',
 			cell: ({ getValue }) => {
-				const status = getValue() as string
+				const status = getValue() as IStatus
 				if (!status) return null
-				return <Badge>{status}</Badge>
+				return <p>{status?.name}</p>
 			},
 		},
 		{
-			accessorKey: 'deadline',
-			header: 'Deadline',
+			accessorKey: 'date',
+			header: 'Date',
 			cell: ({ getValue }) => {
-				const deadline = getValue() as string
-				if (!deadline) return null
-				return <p>{formatDate(deadline)}</p>
+				const date = getValue() as string
+				if (!date) return null
+				return <p>{formatDate(date)}</p>
 			},
 		},
 		{
-			accessorKey: 'updated',
+			accessorKey: 'updated_at',
 			header: 'Last updated',
 			cell: ({ getValue }) => {
 				const updated = getValue() as string

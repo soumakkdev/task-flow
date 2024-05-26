@@ -8,6 +8,7 @@ export const getFormattedDateObj = (date: Dayjs, currentMonth: number): IFormatt
 		year: clonedObject.years,
 		isCurrentMonth: clonedObject.months === currentMonth,
 		isCurrentDay: date.isToday(),
+		isoDate: date?.toISOString(),
 	}
 	return formatedObject
 }
@@ -22,4 +23,5 @@ export interface IFormattedDateObj {
 	year: number
 	isCurrentDay: boolean
 	isCurrentMonth: boolean
+	isoDate: string
 }

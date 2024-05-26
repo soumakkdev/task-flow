@@ -1,65 +1,71 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
-import TableView from './views/TableView'
+import { useAtom } from 'jotai'
+import { Calendar, CircleCheck, Flag, Plus, SquareKanban, Table } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Calendar, Plus, SquareKanban, Table } from 'lucide-react'
 import { Input } from '../ui/input'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
-import { useAtom } from 'jotai'
+import { useStatus, useTasks } from './Tasks.query'
 import { TasksViews, currentViewAtom } from './Tasks.utils'
 import KanbanView from './views/KanbanView'
+import TableView from './views/TableView'
 import CalendarView from './views/calendar/CalendarView'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
-	// const { data: tasksList, isLoading } = useQuery({
-	// 	queryKey: ['tasks'],
-	// 	// queryFn: getTasks,
-	// })
-	// const { data: statusList, isLoading: isStatusLoading } = useQuery({
-	// 	queryKey: ['status'],
-	// 	// queryFn: getStatusList,
-	// })
 
-	// if (isLoading || isStatusLoading) return 'Loading...'
+	const { data: tasksList, isLoading } = useTasks()
+	const { data: statusList, isLoading: isStatusLoading } = useStatus()
+
+	if (isLoading || isStatusLoading) return 'Loading...'
 
 	return (
-		<div className="flex-1 p-4 flex flex-col">
-			<header className="flex items-center justify-between">
-				<h1 className="text-2xl font-bold">Tasks</h1>
+		<div className="flex-1 flex flex-col">
+			<header className="flex items-center justify-between px-4 pt-4">
+				<h1 className="text-xl font-bold">Tasks</h1>
 				<Button>
 					<Plus className="h-5 w-5 mr-1" />
 					Add Task
 				</Button>
 			</header>
 
-			<div className="flex my-3 items-center justify-between">
+			<div className="flex items-center justify-between px-4 my-3">
 				<div className="flex items-center gap-3">
 					<Input placeholder="Search tasks" />
-					<Button variant="secondary">Status</Button>
-					<Button variant="secondary">Priority</Button>
+					<Button variant="outline" size="sm" className="gap-1">
+						<CircleCheck className="h-4 w-4" />
+						Status
+						{/* <ChevronDown className="h-4 w-4" /> */}
+					</Button>
+					<Button variant="outline" size="sm" className="gap-1">
+						<Flag className="h-4 w-4" />
+						Priority
+						{/* <ChevronDown className="h-4 w-4" /> */}
+					</Button>
 				</div>
 
 				<ToggleGroup type="single" value={currentView} onValueChange={(value: TasksViews) => setCurrentView(value)}>
-					<ToggleGroupItem value={TasksViews.Table} className="rounded-xl">
-						<Table className="h-5 w-5" />
+					<ToggleGroupItem value={TasksViews.Table} className="h-8 gap-1 rounded-lg px-2">
+						<Table className="h-4 w-4" />
+						<span>Table</span>
 					</ToggleGroupItem>
-					<ToggleGroupItem value={TasksViews.Kanban} className="rounded-xl">
-						<SquareKanban className="h-5 w-5" />
+					<ToggleGroupItem value={TasksViews.Kanban} className="h-8 gap-1 rounded-lg px-2">
+						<SquareKanban className="h-4 w-4" />
+						<span>Board</span>
 					</ToggleGroupItem>
-					<ToggleGroupItem value={TasksViews.Calendar} className="rounded-xl">
-						<Calendar className="h-5 w-5" />
+					<ToggleGroupItem value={TasksViews.Calendar} className="h-8 gap-1 rounded-lg px-2">
+						<Calendar className="h-4 w-4" />
+						<span>Calendar</span>
 					</ToggleGroupItem>
 				</ToggleGroup>
 			</div>
 
-			{/* {currentView === TasksViews.Table ? (
-				<TableView tasks={tasksList?.items} />
+			{currentView === TasksViews.Table ? (
+				<TableView tasks={tasksList} />
 			) : currentView === TasksViews.Kanban ? (
-				<KanbanView tasks={tasksList?.items} statusList={statusList?.items} />
+				<KanbanView tasks={tasksList} statusList={statusList} />
 			) : currentView === TasksViews.Calendar ? (
-				<CalendarView />
-			) : null} */}
+				<CalendarView tasks={tasksList} />
+			) : null}
 		</div>
 	)
 }

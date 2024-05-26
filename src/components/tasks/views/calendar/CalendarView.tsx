@@ -8,12 +8,13 @@ import Header from './Header'
 import ViewDates from './ViewDates'
 import ViewDays from './ViewDays'
 import { now, IFormattedDateObj, getFormattedDateObj } from './calender.utils'
+import { ITask } from '@/types/tasks'
 
 dayjs.extend(isTodayPlugin)
 dayjs.extend(toObjectPlugin)
 dayjs.extend(weekdayPlugin)
 
-function CalendarView() {
+function CalendarView({ tasks }: { tasks: ITask[] }) {
 	const [currentMonth, setCurrentMonth] = useState<Dayjs>(now)
 	const [arrayOfDays, setArrayOfDays] = useState<IFormattedDateObj[][]>([])
 
@@ -44,7 +45,7 @@ function CalendarView() {
 	}, [currentMonth])
 
 	return (
-		<main className="flex h-full flex-col">
+		<main className="flex h-full flex-col border-t">
 			<Header
 				currentMonth={currentMonth}
 				onChangeCurrentMonth={(day) => {
@@ -56,7 +57,7 @@ function CalendarView() {
 				<div className="ring-1 ring-border ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
 					<ViewDays />
 					<div className="flex overflow-auto bg-border text-xs leading-6 text-foreground lg:flex-auto">
-						<ViewDates arrayOfDays={arrayOfDays} />
+						<ViewDates arrayOfDays={arrayOfDays} tasks={tasks} />
 					</div>
 				</div>
 			</div>
