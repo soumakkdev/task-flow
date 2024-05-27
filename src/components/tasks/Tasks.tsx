@@ -9,9 +9,12 @@ import { TasksViews, currentViewAtom } from './Tasks.utils'
 import KanbanView from './views/KanbanView'
 import TableView from './views/TableView'
 import CalendarView from './views/calendar/CalendarView'
+import { useState } from 'react'
+import AddTaskDialog from './components/AddTaskDialog'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
+	const [isAddTaskDialogOpen, setIsAddTaskDialogOpen] = useState(false)
 
 	const { data: tasksList, isLoading } = useTasks()
 	const { data: statusList, isLoading: isStatusLoading } = useStatus()
@@ -22,7 +25,7 @@ export default function Tasks() {
 		<div className="flex-1 flex flex-col">
 			<header className="flex items-center justify-between px-4 pt-4">
 				<h1 className="text-xl font-bold">Tasks</h1>
-				<Button>
+				<Button onClick={() => setIsAddTaskDialogOpen(true)}>
 					<Plus className="h-5 w-5 mr-1" />
 					Add Task
 				</Button>
@@ -66,6 +69,8 @@ export default function Tasks() {
 			) : currentView === TasksViews.Calendar ? (
 				<CalendarView tasks={tasksList} />
 			) : null}
+
+			<AddTaskDialog open={isAddTaskDialogOpen} onClose={() => setIsAddTaskDialogOpen(false)} statusList={statusList} />
 		</div>
 	)
 }
