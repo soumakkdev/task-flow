@@ -26,7 +26,7 @@ export default function KanbanView({ tasks, statusList }: { tasks: ITask[]; stat
 							{status.name}
 						</Badge>
 
-						<div className="flex flex-col my-3">
+						<div className="flex flex-col my-3 gap-2">
 							{statusTasks?.map((task) => (
 								<div key={task.id} className="bg-white text-sm p-4 rounded-md shadow-sm">
 									{task.title}

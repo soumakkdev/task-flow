@@ -2,6 +2,7 @@ import { formatDate } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import DataTable from '../../widgets/DataTable'
 import { IStatus, ITask } from '@/types/tasks'
+import { TaskPriority, getPriorityName } from '../Tasks.utils'
 
 export default function TableView({ tasks }: { tasks: ITask[] }) {
 	const columns: ColumnDef<any>[] = [
@@ -12,6 +13,11 @@ export default function TableView({ tasks }: { tasks: ITask[] }) {
 		{
 			accessorKey: 'priority',
 			header: 'Priority',
+			cell: ({ getValue }) => {
+				const priority = getValue() as TaskPriority
+				if (!priority) return null
+				return <p>{getPriorityName(priority)}</p>
+			},
 		},
 		{
 			accessorKey: 'status',

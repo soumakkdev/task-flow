@@ -7,10 +7,13 @@ import Select from '@/components/widgets/Select'
 import { useForm } from '@tanstack/react-form'
 import React from 'react'
 import { PriorityOptions } from '../Tasks.utils'
-import { IStatus } from '@/types/tasks'
+import { IAddTaskBody, IStatus } from '@/types/tasks'
 import { DatePicker } from '@/components/widgets/DatePicker'
+import { useAddTask } from '../Tasks.query'
 
 export default function AddTaskDialog({ open, onClose, statusList }: { open: boolean; onClose: () => void; statusList: IStatus[] }) {
+	const addTaskMutation = useAddTask()
+
 	const form = useForm({
 		defaultValues: {
 			title: '',
@@ -20,11 +23,18 @@ export default function AddTaskDialog({ open, onClose, statusList }: { open: boo
 			date: '',
 		},
 		onSubmit: async ({ value }) => {
-			try {
-				console.log(value)
-			} catch (error) {
-				console.log(error)
+			const reqBody: IAddTaskBody = {
+				date: value.date,
+				priority: value.priority,
+				title: value.title,
+				description: value?.description ?? null,
+				status_id: parseInt(value?.status),
 			}
+			addTaskMutation.mutate(reqBody, {
+				onSettled: () => {
+					onClose()
+				},
+			})
 		},
 	})
 
@@ -104,10 +114,12 @@ export default function AddTaskDialog({ open, onClose, statusList }: { open: boo
 				</form.Field>
 
 				<Modal.Footer>
-					<Button variant="ghost" onClick={onClose}>
+					<Button type="reset" variant="ghost" disabled={addTaskMutation.isPending} onClick={onClose}>
 						Cancel
 					</Button>
-					<Button>Submit</Button>
+					<Button type="submit" disabled={addTaskMutation.isPending}>
+						Submit
+					</Button>
 				</Modal.Footer>
 			</form>
 		</Modal>

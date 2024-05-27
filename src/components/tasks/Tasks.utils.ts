@@ -33,3 +33,7 @@ export const PriorityOptions = [
 		value: TaskPriority.Low,
 	},
 ]
+
+export function getPriorityName(priority: TaskPriority) {
+	return PriorityOptions?.find((p) => p.value === priority)?.label ?? null
+}

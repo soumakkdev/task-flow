@@ -3,7 +3,7 @@ export interface ITask {
 	created_at: string
 	title: string
 	description?: string | null
-	priority: number
+	priority: string
 	date: string
 	status_id: number
 	updated_at: string
@@ -15,4 +15,12 @@ export interface IStatus {
 	name: string
 	color: string
 	created_at: string
+}
+
+export interface IAddTaskBody {
+	title: string
+	description?: string | null
+	priority: string
+	date: string
+	status_id: number
 }
