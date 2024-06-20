@@ -11,6 +11,7 @@ import TableView from './views/TableView'
 import CalendarView from './views/calendar/CalendarView'
 import { useState } from 'react'
 import AddTaskDialog from './components/AddTaskDialog'
+import TasksFilters from './components/TasksFilters'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
@@ -32,19 +33,7 @@ export default function Tasks() {
 			</header>
 
 			<div className="flex items-center justify-between px-4 my-3">
-				<div className="flex items-center gap-3">
-					<Input placeholder="Search tasks" />
-					<Button variant="outline" size="sm" className="gap-1">
-						<CircleCheck className="h-4 w-4" />
-						Status
-						{/* <ChevronDown className="h-4 w-4" /> */}
-					</Button>
-					<Button variant="outline" size="sm" className="gap-1">
-						<Flag className="h-4 w-4" />
-						Priority
-						{/* <ChevronDown className="h-4 w-4" /> */}
-					</Button>
-				</div>
+				<TasksFilters statusList={statusList} />
 
 				<ToggleGroup type="single" value={currentView} onValueChange={(value: TasksViews) => setCurrentView(value)}>
 					<ToggleGroupItem value={TasksViews.Table} className="h-8 gap-1 rounded-lg px-2">

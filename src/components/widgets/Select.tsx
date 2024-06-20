@@ -1,7 +1,7 @@
 import React from 'react'
 import { SelectContent, SelectGroup, SelectItem, SelectLabel, SelectRoot, SelectTrigger, SelectValue } from '../ui/select'
 
-interface ISelectOption {
+export interface ISelectOption {
 	label: string
 	value: string
 }
