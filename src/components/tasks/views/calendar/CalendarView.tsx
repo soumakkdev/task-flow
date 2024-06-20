@@ -42,6 +42,7 @@ function CalendarView({ tasks }: { tasks: ITask[] }) {
 
 	useEffect(() => {
 		getAllDays()
+		// eslint-disable-next-line
 	}, [currentMonth])
 
 	return (
