@@ -67,12 +67,12 @@ export default function Login({ searchParams }: { searchParams: { message: strin
 				<form className="space-y-6">
 					<div className="space-y-1">
 						<Label htmlFor="email">Email address</Label>
-						<Input name="email" id="email" placeholder="test@example.com" />
+						<Input name="email" id="email" placeholder="test@example.com" defaultValue="test@example.com" />
 					</div>
 
 					<div className="space-y-1">
 						<Label htmlFor="password">Password</Label>
-						<Input type="password" name="password" id="password" placeholder="••••••••" />
+						<Input type="password" name="password" id="password" placeholder="••••••••" defaultValue="example@test" />
 					</div>
 
 					<div>

@@ -30,7 +30,6 @@ export default function KanbanView({ tasks, statusList }: { tasks: ITask[]; stat
 							{statusTasks?.map((task) => (
 								<div key={task.id} className="bg-white text-sm p-4 rounded-md shadow-sm">
 									{task.title}
-									{task.priority}
 								</div>
 							))}
 						</div>

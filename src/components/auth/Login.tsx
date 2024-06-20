@@ -11,8 +11,8 @@ export default function Login() {
 	const { loginWithPassword } = useAuth()
 	const form = useForm({
 		defaultValues: {
-			email: '',
-			password: '',
+			email: 'test@example.com',
+			password: 'example@test',
 		},
 		onSubmit: async ({ value }) => {
 			try {
