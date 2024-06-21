@@ -10,25 +10,27 @@ export default function KanbanView({ tasks, statusList }: { tasks: ITask[]; stat
 				return (
 					<div
 						key={status.id}
-						className="bg-muted rounded-lg border w-64 p-3"
+						className="bg-card rounded-xl w-72 p-2"
 						style={
 							{
 								// backgroundColor: status.color ? `${status.color}19` : '#f1f5f9',
 							}
 						}
 					>
-						<Badge
-							style={{
-								color: `${status.color ?? '#0f172a'} `,
-								backgroundColor: status.color ? `${status.color}19` : '#f1f5f9',
-							}}
-						>
-							{status.name}
-						</Badge>
+						<div className="px-1 pb-1">
+							<Badge
+								style={{
+									color: `${status.color ?? '#0f172a'} `,
+									backgroundColor: status.color ? `${status.color}19` : '#f1f5f9',
+								}}
+							>
+								{status.name}
+							</Badge>
+						</div>
 
-						<div className="flex flex-col my-3 gap-2">
+						<div className="flex flex-col my-1 gap-2">
 							{statusTasks?.map((task) => (
-								<div key={task.id} className="bg-white text-sm p-4 rounded-md shadow-sm">
+								<div key={task.id} className="bg-muted text-sm p-4 rounded-lg shadow-sm">
 									{task.title}
 								</div>
 							))}

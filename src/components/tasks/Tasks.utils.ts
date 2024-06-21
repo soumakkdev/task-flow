@@ -1,4 +1,4 @@
-import { atom } from 'jotai'
+import { atom, useAtom } from 'jotai'
 
 export enum TasksViews {
 	Table = '1',
@@ -37,3 +37,13 @@ export const PriorityOptions = [
 export function getPriorityName(priority: TaskPriority) {
 	return PriorityOptions?.find((p) => p.value === priority)?.label ?? null
 }
+
+export const searchQueryAtom = atom('')
+export const statusFilterAtom = atom<string[] | null>(null)
+export const priorityFilterAtom = atom<string[] | null>(null)
+
+export const tasksFilterAtom = atom((get) => ({
+	search: get(searchQueryAtom),
+	status: get(statusFilterAtom),
+	priority: get(priorityFilterAtom),
+}))

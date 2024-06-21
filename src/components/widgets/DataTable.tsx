@@ -15,9 +15,9 @@ export default function DataTable<TData, TValue>({ data, columns }: DataTablePro
 		getCoreRowModel: getCoreRowModel(),
 	})
 	return (
-		<div>
+		<div className="">
 			<Table className="border-y">
-				<TableHeader>
+				<TableHeader className="bg-muted">
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map((header) => (

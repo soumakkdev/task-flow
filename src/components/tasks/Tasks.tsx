@@ -1,17 +1,17 @@
 'use client'
 import { useAtom } from 'jotai'
-import { Calendar, CircleCheck, Flag, Plus, SquareKanban, Table } from 'lucide-react'
+import { Calendar, Plus, SquareKanban, Table } from 'lucide-react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
-import { Input } from '../ui/input'
+import Loader from '../ui/loader'
 import { ToggleGroup, ToggleGroupItem } from '../ui/toggle-group'
 import { useStatus, useTasks } from './Tasks.query'
 import { TasksViews, currentViewAtom } from './Tasks.utils'
+import AddTaskDialog from './components/AddTaskDialog'
+import TasksFilters from './components/TasksFilters'
 import KanbanView from './views/KanbanView'
 import TableView from './views/TableView'
 import CalendarView from './views/calendar/CalendarView'
-import { useState } from 'react'
-import AddTaskDialog from './components/AddTaskDialog'
-import TasksFilters from './components/TasksFilters'
 
 export default function Tasks() {
 	const [currentView, setCurrentView] = useAtom(currentViewAtom)
@@ -20,7 +20,12 @@ export default function Tasks() {
 	const { data: tasksList, isLoading } = useTasks()
 	const { data: statusList, isLoading: isStatusLoading } = useStatus()
 
-	if (isLoading || isStatusLoading) return 'Loading...'
+	if (isLoading || isStatusLoading)
+		return (
+			<div className="h-full w-full grid place-content-center">
+				<Loader />
+			</div>
+		)
 
 	return (
 		<div className="flex-1 flex flex-col">
@@ -51,13 +56,15 @@ export default function Tasks() {
 				</ToggleGroup>
 			</div>
 
-			{currentView === TasksViews.Table ? (
-				<TableView tasks={tasksList} />
-			) : currentView === TasksViews.Kanban ? (
-				<KanbanView tasks={tasksList} statusList={statusList} />
-			) : currentView === TasksViews.Calendar ? (
-				<CalendarView tasks={tasksList} />
-			) : null}
+			<>
+				{currentView === TasksViews.Table ? (
+					<TableView tasks={tasksList} />
+				) : currentView === TasksViews.Kanban ? (
+					<KanbanView tasks={tasksList} statusList={statusList} />
+				) : currentView === TasksViews.Calendar ? (
+					<CalendarView tasks={tasksList} />
+				) : null}
+			</>
 
 			<AddTaskDialog open={isAddTaskDialogOpen} onClose={() => setIsAddTaskDialogOpen(false)} statusList={statusList} />
 		</div>

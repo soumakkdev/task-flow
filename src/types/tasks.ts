@@ -24,3 +24,9 @@ export interface IAddTaskBody {
 	date: string
 	status_id: number
 }
+
+export interface ITaskQuery {
+	status?: string[] | null
+	priority?: string[] | null
+	search?: string | null
+}
